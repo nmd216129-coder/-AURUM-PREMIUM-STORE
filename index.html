@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM | Premium Store</title>
+<style>
+:root {
+  --black:#080808;
+  --panel:#151515;
+  --gold:#D7B56D;
+  --cream:#F5F0E5;
+  --muted:#aaa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--cream);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(8,8,8,.95);
+  border-bottom:1px solid #29231a;
+  padding:17px 6%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  color:var(--gold);font-size:27px;
+  font-weight:800;letter-spacing:5px;
+}
+nav{display:flex;gap:25px}
+nav a{
+  color:var(--cream);text-decoration:none;
+  font-size:13px;letter-spacing:1px;
+}
+nav a:hover{color:var(--gold)}
+.header-actions{display:flex;gap:12px;align-items:center}
+.icon-btn{
+  background:none;border:1px solid #51432a;
+  color:var(--gold);padding:9px 13px;border-radius:4px;
+}
+.hero{
+  min-height:540px;padding:80px 8%;
+  display:flex;align-items:center;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.65),rgba(0,0,0,.15)),
+    url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85') center/cover;
+}
+.hero-content{max-width:550px}
+.eyebrow{
+  color:var(--gold);letter-spacing:5px;
+  font-size:12px;margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(45px,8vw,82px);
+  line-height:1.02;letter-spacing:2px;
+}
+.hero h1 span{color:var(--gold)}
+.hero p{
+  color:#ccc;line-height:1.8;
+  margin:22px 0 28px;max-width:420px;
+}
+.gold-btn{
+  background:var(--gold);color:#111;
+  border:0;padding:14px 25px;
+  font-weight:bold;letter-spacing:1px;
+  border-radius:2px;
+}
+.gold-btn:hover{background:#f0d08d}
+.section{padding:65px 6%}
+.section-head{
+  display:flex;justify-content:space-between;
+  align-items:end;gap:15px;margin-bottom:28px;
+}
+.section-head h2{font-size:30px}
+.section-head p{color:var(--muted);font-size:13px}
+.categories{
+  display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;
+}
+.filter{
+  background:transparent;color:#ccc;
+  border:1px solid #444;padding:10px 18px;
+}
+.filter.active,.filter:hover{
+  background:var(--gold);color:#111;border-color:var(--gold);
+}
+.search-wrap{margin-bottom:25px}
+.search-wrap input{
+  width:100%;max-width:390px;
+  background:#141414;border:1px solid #444;
+  color:white;padding:13px 15px;outline:none;
+}
+.search-wrap input:focus{border-color:var(--gold)}
+.products{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.product{
+  background:var(--panel);
+  border:1px solid #252525;
+  overflow:hidden;position:relative;
+  transition:.25s;
+}
+.product:hover{
+  transform:translateY(-5px);
+  border-color:#8b7040;
+}
+.product img{
+  width:100%;height:260px;object-fit:cover;
+  display:block;background:#222;
+}
+.product-info{padding:16px}
+.product-info h3{font-size:15px;margin-bottom:8px}
+.category-label{
+  color:var(--gold);font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+}
+.price{color:var(--gold);font-weight:bold;margin:12px 0}
+.product-actions{display:flex;gap:8px}
+.add-btn{
+  flex:1;background:transparent;color:var(--gold);
+  border:1px solid var(--gold);padding:10px 5px;
+}
+.add-btn:hover{background:var(--gold);color:#111}
+.wish-btn{
+  width:42px;background:#222;color:var(--gold);
+  border:1px solid #444;font-size:18px;
+}
+.wish-btn.liked{color:#ff6b81}
+.empty{
+  grid-column:1/-1;text-align:center;
+  color:var(--muted);padding:40px;
+}
+.banner{
+  margin:10px 6% 65px;padding:55px 25px;
+  text-align:center;border:1px solid #59482b;
+  background:linear-gradient(120deg,#17130d,#090909);
+}
+.banner h2{color:var(--gold);font-size:30px;margin-bottom:12px}
+.banner p{color:#bbb;margin-bottom:20px;line-height:1.7}
+footer{
+  padding:35px 6%;border-top:1px solid #29231a;
+  display:flex;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;color:#999;font-size:12px;
+}
+footer strong{color:var(--gold);letter-spacing:3px}
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:29;display:none;
+}
+.overlay.show{display:block}
+.cart-panel{
+  position:fixed;right:-420px;top:0;bottom:0;
+  width:min(390px,90vw);background:#121212;
+  z-index:30;padding:25px;transition:.3s;
+  border-left:1px solid #5a482b;overflow:auto;
+}
+.cart-panel.open{right:0}
+.cart-head{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:25px;
+}
+.cart-head h2{color:var(--gold)}
+.close-btn{
+  background:none;color:white;border:1px solid #555;
+  padding:7px 12px;
+}
+.cart-item{
+  display:flex;gap:12px;padding:14px 0;
+  border-bottom:1px solid #333;
+}
+.cart-item img{width:65px;height:75px;object-fit:cover}
+.cart-item-info{flex:1}
+.cart-item-info p{color:var(--gold);margin:7px 0}
+.qty-row{display:flex;gap:10px;align-items:center}
+.qty-row button{
+  background:#282828;color:white;border:0;
+  padding:4px 10px;
+}
+.remove{color:#e58b8b!important;background:none!important}
+.cart-total{
+  display:flex;justify-content:space-between;
+  margin:25px 0;color:var(--gold);font-size:19px;
+}
+.checkout{width:100%}
+#checkout-message{
+  color:#b8d8a0;font-size:13px;
+  line-height:1.6;margin-top:15px;
+}
+@media(max-width:900px){
+  .products{grid-template-columns:repeat(2,1fr)}
+  nav{gap:12px}
+}
+@media(max-width:600px){
+  header{padding:14px 4%;flex-wrap:wrap;gap:13px}
+  .logo{font-size:22px}
+  nav{order:3;width:100%;justify-content:center}
+  nav a{font-size:11px}
+  .hero{min-height:470px;padding:55px 7%}
+  .section{padding:48px 4%}
+  .products{gap:10px}
+  .product img{height:185px}
+  .product-info{padding:11px}
+  .product-info h3{font-size:13px}
+  .add-btn{font-size:11px}
+  .section-head h2{font-size:24px}
+  .banner{margin:0 4% 45px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AURUM</div>
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#shop">SHOP</a>
+    <a href="#about">ABOUT</a>
+  </nav>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="openCart()">
+      CART (<span id="cart-count">0</span>)
+    </button>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="eyebrow">THE ART OF LUXURY</div>
+    <h1>DEFINE YOUR<br><span>STYLE.</span></h1>
+    <p>Discover a refined collection of premium essentials.
+       Exceptional style, timeless quality and modern elegance.</p>
+    <a href="#shop"><button class="gold-btn">EXPLORE COLLECTION</button></a>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">CURATED FOR YOU</p>
+      <h2>Our Collection</h2>
+    </div>
+    <p>PREMIUM SELECTION</p>
+  </div>
+
+  <div class="categories">
+    <button class="filter active" onclick="filterProducts('All',this)">All</button>
+    <button class="filter" onclick="filterProducts('Fashion',this)">Fashion</button>
+    <button class="filter" onclick="filterProducts('Shoes',this)">Shoes</button>
+    <button class="filter" onclick="filterProducts('Watches',this)">Watches</button>
+    <button class="filter" onclick="filterProducts('Accessories',this)">Accessories</button>
+  </div>
+
+  <div class="search-wrap">
+    <input id="search" type="search" placeholder="Search products..." oninput="renderProducts()">
+  </div>
+
+  <div class="products" id="product-list"></div>
+</section>
+
+<section class="banner" id="about">
+  <p class="eyebrow">AURUM EXPERIENCE</p>
+  <h2>Luxury Is In The Details.</h2>
+  <p>Carefully selected essentials for those who value quality and timeless design.</p>
+  <a href="#shop"><button class="gold-btn">SHOP NOW</button></a>
+</section>
+
+<footer>
+  <strong>AURUM</strong>
+  <span>Premium E-commerce Experience</span>
+  <span>© 2026 AURUM. Demo Store.</span>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="cart-panel" id="cart-panel">
+  <div class="cart-head">
+    <h2>Your Cart</h2>
+    <button class="close-btn" onclick="closeCart()">CLOSE</button>
+  </div>
+  <div id="cart-items"></div>
+  <div class="cart-total">
+    <span>Total</span>
+    <strong id="cart-total">৳0</strong>
+  </div>
+  <button class="gold-btn checkout" onclick="checkout()">CONTINUE TO CHECKOUT</button>
+  <p id="checkout-message"></p>
+</aside>
+
+<script>
+const products = [
+  {
+    id:1,name:"Classic Black Jacket",category:"Fashion",price:3200,
+    image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:2,name:"Premium Leather Shoes",category:"Shoes",price:2800,
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:3,name:"Luxury Wrist Watch",category:"Watches",price:4500,
+    image:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:4,name:"Elegant Sunglasses",category:"Accessories",price:1500,
+    image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:5,name:"Modern Casual Shirt",category:"Fashion",price:1250,
+    image:"https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:6,name:"Urban Sneakers",category:"Shoes",price:2400,
+    image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:7,name:"Classic Gold Watch",category:"Watches",price:5200,
+    image:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=700&q=85"
+  },
+  {
+    id:8,name:"Premium Leather Bag",category:"Accessories",price:3600,
+    image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=700&q=85"
+  }
+];
+
+let selectedCategory="All";
+let cart=[];
+let wishlist=[];
+
+function money(value){
+  return "৳"+value.toLocaleString("en-IN");
+}
+
+function renderProducts(){
+  const search=document.getElementById("search").value.toLowerCase();
+  const filtered=products.filter(p=>
+    (selectedCategory==="All" || p.category===selectedCategory) &&
+    p.name.toLowerCase().includes(search)
+  );
+
+  const list=document.getElementById("product-list");
+  if(!filtered.length){
+    list.innerHTML='<div class="empty">No products found.</div>';
+    return;
+  }
+
+  list.innerHTML=filtered.map(p=>`
+    <article class="product">
+      <img src="${p.image}" alt="${p.name}" loading="lazy">
+      <div class="product-info">
+        <div class="category-label">${p.category}</div>
+        <h3>${p.name}</h3>
+        <div class="price">${money(p.price)}</div>
+        <div class="product-actions">
+          <button class="add-btn" onclick="addToCart(${p.id})">ADD TO CART</button>
+          <button class="wish-btn ${wishlist.includes(p.id)?"liked":""}"
+            onclick="toggleWish(${p.id})" aria-label="Add to wishlist">♥</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+function filterProducts(category,button){
+  selectedCategory=category;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  renderProducts();
+}
+
+function addToCart(id){
+  const existing=cart.find(item=>item.id===id);
+  if(existing) existing.qty++;
+  else cart.push({id,qty:1});
+  updateCart();
+}
+
+function toggleWish(id){
+  if(wishlist.includes(id)){
+    wishlist=wishlist.filter(x=>x!==id);
+  }else{
+    wishlist.push(id);
+  }
+  renderProducts();
+}
+
+function updateCart(){
+  const count=cart.reduce((sum,item)=>sum+item.qty,0);
+  document.getElementById("cart-count").textContent=count;
+
+  const container=document.getElementById("cart-items");
+  if(cart.length===0){
+    container.innerHTML='<p style="color:#aaa">Your cart is empty.</p>';
+  }else{
+    container.innerHTML=cart.map(item=>{
+      const p=products.find(x=>x.id===item.id);
+      return `
+        <div class="cart-item">
+          <img src="${p.image}" alt="${p.name}">
+          <div class="cart-item-info">
+            <strong>${p.name}</strong>
+            <p>${money(p.price)}</p>
+            <div class="qty-row">
+              <button onclick="changeQty(${p.id},-1)">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeQty(${p.id},1)">+</button>
+              <button class="remove" onclick="removeItem(${p.id})">Remove</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  const total=cart.reduce((sum,item)=>{
+    const p=products.find(x=>x.id===item.id);
+    return sum+p.price*item.qty;
+  },0);
+
+  document.getElementById("cart-total").textContent=money(total);
+  document.getElementById("checkout-message").textContent="";
+}
+
+function changeQty(id,change){
+  const item=cart.find(x=>x.id===id);
+  if(!item)return;
+  item.qty+=change;
+  if(item.qty<=0)removeItem(id);
+  else updateCart();
+}
+
+function removeItem(id){
+  cart=cart.filter(x=>x.id!==id);
+  updateCart();
+}
+
+function openCart(){
+  document.getElementById("cart-panel").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+}
+
+function closeCart(){
+  document.getElementById("cart-panel").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+
+function checkout(){
+  const message=document.getElementById("checkout-message");
+  if(!cart.length){
+    message.textContent="Your cart is empty. Add a product first.";
+    return;
+  }
+  message.textContent="Demo checkout only. Real payment and order processing will be connected in a later version.";
+}
+
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>
