@@ -5,602 +5,280 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AURUM | Premium Store</title>
-<meta name="description" content="Discover premium fashion, shoes, watches and accessories at AURUM.">
+<title>AURUM | Premium Fashion Store</title>
+<meta name="description" content="Discover premium fashion, luxury accessories, watches, shoes and more at AURUM.">
+<meta name="theme-color" content="#080808">
 
 <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
-<header>
-  <div class="logo">AURUM</div>
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  <p>WELCOME TO AURUM — EXPERIENCE PREMIUM LUXURY</p>
+</div>
 
-  <nav>
-    <a href="#home">HOME</a>
-    <a href="#shop">SHOP</a>
-    <a href="#about">ABOUT</a>
-  </nav>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-container">
 
-  <div class="header-actions">
-    <button class="icon-btn" onclick="openCart()">
-      CART (<span id="cart-count">0</span>)
-    </button>
+    <a href="index.html" class="logo">
+      AURUM
+      <span>PREMIUM STORE</span>
+    </a>
+
+    <nav class="navigation">
+      <a href="#home">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#products">Collection</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" onclick="openCart()" aria-label="Shopping cart">
+        CART <span id="cartCount">0</span>
+      </button>
+      <button type="button" onclick="openWishlist()" aria-label="Wishlist">
+        ♡
+      </button>
+    </div>
+
   </div>
 </header>
 
-<!-- HERO -->
-
+<!-- HERO SECTION -->
 <section class="hero" id="home">
   <div class="hero-content">
-    <div class="eyebrow">THE ART OF LUXURY</div>
 
-    <h1>DEFINE YOUR<br><span>STYLE.</span></h1>
+    <p class="hero-label">THE ART OF PREMIUM LIVING</p>
 
-    <p>
-      Discover a refined collection of premium essentials.
-      Exceptional style, timeless quality and modern elegance.
+    <h1>
+      ELEVATE YOUR<br>
+      <span>STYLE.</span>
+    </h1>
+
+    <p class="hero-description">
+      Discover a world of timeless fashion,
+      premium quality and sophisticated design.
     </p>
 
-    <a href="#shop">
-      <button class="gold-btn">EXPLORE COLLECTION</button>
+    <a href="#products" class="hero-button">
+      EXPLORE COLLECTION
     </a>
+
   </div>
 </section>
 
-<!-- SHOP -->
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
 
-<section class="section" id="shop">
-
-  <div class="section-head">
-    <div>
-      <p class="eyebrow">CURATED FOR YOU</p>
-      <h2>Our Collection</h2>
-    </div>
-    <p>16 PREMIUM PRODUCTS</p>
+  <div class="section-heading">
+    <p>EXPLORE OUR WORLD</p>
+    <h2>SHOP BY CATEGORY</h2>
   </div>
 
-  <!-- FILTERS -->
-
-  <div class="categories">
-    <button class="filter active" onclick="filterProducts('All',this)">All</button>
-    <button class="filter" onclick="filterProducts('Fashion',this)">Fashion</button>
-    <button class="filter" onclick="filterProducts('Shoes',this)">Shoes</button>
-    <button class="filter" onclick="filterProducts('Watches',this)">Watches</button>
-    <button class="filter" onclick="filterProducts('Accessories',this)">Accessories</button>
+  <div class="category-list">
+    <button onclick="filterProducts('all')">ALL COLLECTION</button>
+    <button onclick="filterProducts('Men')">MEN</button>
+    <button onclick="filterProducts('Women')">WOMEN</button>
+    <button onclick="filterProducts('Watches')">WATCHES</button>
+    <button onclick="filterProducts('Shoes')">SHOES</button>
+    <button onclick="filterProducts('Accessories')">ACCESSORIES</button>
   </div>
 
-  <!-- SEARCH -->
+</section>
 
-  <div class="search-wrap">
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+
+  <div class="section-heading">
+    <p>CURATED FOR YOU</p>
+    <h2>OUR COLLECTION</h2>
+  </div>
+
+  <div class="product-toolbar">
     <input
-      id="search"
       type="search"
-      placeholder="Search products..."
-      oninput="renderProducts()"
+      id="searchInput"
+      placeholder="Search premium products..."
+      oninput="searchProducts()"
+      aria-label="Search products"
     >
+
+    <select id="sortProducts" onchange="sortProducts()">
+      <option value="default">Sort By</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="name">Name: A to Z</option>
+    </select>
   </div>
 
-  <!-- PRODUCTS -->
-
-  <div class="products" id="product-list"></div>
+  <div class="product-grid" id="productList">
+    <!-- Products loaded from products.js -->
+  </div>
 
 </section>
 
-<!-- ABOUT -->
+<!-- PROMOTIONAL BANNER -->
+<section class="promo-banner" id="about">
 
-<section class="banner" id="about">
-  <p class="eyebrow">AURUM EXPERIENCE</p>
+  <div class="promo-content">
+    <p>THE AURUM EXPERIENCE</p>
+    <h2>TIMELESS STYLE.<br>UNCOMPROMISING QUALITY.</h2>
+    <p>
+      A premium collection designed for people
+      who appreciate elegance and individuality.
+    </p>
 
-  <h2>Luxury Is In The Details.</h2>
+    <a href="#products">DISCOVER MORE</a>
+  </div>
 
-  <p>
-    Carefully selected essentials for those who value
-    quality and timeless design.
-  </p>
+</section>
 
-  <a href="#shop">
-    <button class="gold-btn">SHOP NOW</button>
-  </a>
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>JOIN THE AURUM WORLD</h2>
+  <p>Stay connected with our latest collections and updates.</p>
+
+  <form onsubmit="subscribeNewsletter(event)">
+    <input type="email" id="newsletterEmail"
+      placeholder="Enter your email address" required>
+    <button type="submit">SUBSCRIBE</button>
+  </form>
 </section>
 
 <!-- FOOTER -->
+<footer class="footer">
 
-<footer>
-  <strong>AURUM</strong>
-  <span>Premium E-commerce Experience</span>
-  <span>© 2026 AURUM. Demo Store.</span>
+  <div class="footer-grid">
+
+    <div>
+      <h2 class="footer-logo">AURUM</h2>
+      <p>Experience Luxury. Shop AURUM.</p>
+    </div>
+
+    <div>
+      <h3>QUICK LINKS</h3>
+      <a href="#home">Home</a>
+      <a href="#products">Collection</a>
+      <a href="#categories">Categories</a>
+      <a href="#about">About Us</a>
+    </div>
+
+    <div>
+      <h3>CUSTOMER CARE</h3>
+      <a href="#about">Contact</a>
+      <a href="#about">Shipping Information</a>
+      <a href="#about">Privacy Policy</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 AURUM PREMIUM STORE. ALL RIGHTS RESERVED.</p>
+    <a href="admin.html">Admin Panel</a>
+  </div>
+
 </footer>
 
-<!-- CART OVERLAY -->
-
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
-
 <!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 
-<aside class="cart-panel" id="cart-panel">
+<aside class="cart-panel" id="cartPanel">
 
-  <div class="cart-head">
-    <h2>Your Cart</h2>
-    <button class="close-btn" onclick="closeCart()">CLOSE</button>
+  <div class="cart-header">
+    <h2>YOUR CART</h2>
+    <button onclick="closeCart()">✕</button>
   </div>
 
-  <div id="cart-items"></div>
-
-  <div class="cart-total">
-    <span>Total</span>
-    <strong id="cart-total">৳0</strong>
+  <div id="cartItems">
+    <p>Your cart is empty.</p>
   </div>
 
-  <button class="gold-btn checkout" onclick="checkout()">
-    CONTINUE TO CHECKOUT
-  </button>
-
-  <p id="checkout-message"></p>
+  <div class="cart-footer">
+    <h3>Total: <span id="cartTotal">৳0</span></h3>
+    <button onclick="checkout()">PROCEED TO CHECKOUT</button>
+  </div>
 
 </aside>
 
+<!-- WISHLIST PANEL -->
+<div id="wishlistPanel" class="wishlist-panel">
+  <div class="cart-header">
+    <h2>YOUR WISHLIST</h2>
+    <button onclick="closeWishlist()">✕</button>
+  </div>
+  <div id="wishlistItems"></div>
+</div>
+
+<!-- JAVASCRIPT FILES -->
+<script src="config.js"></script>
+<script src="products.js"></script>
+<script src="script.js"></script>
+
+<!-- EXTRA STORE FUNCTIONS -->
 <script>
-
-// ===================================
-// AURUM PRODUCT DATABASE
-// ===================================
-
-const products = [
-
-  {
-    id:1,
-    name:"Classic Black Jacket",
-    category:"Fashion",
-    price:3200,
-    image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:2,
-    name:"Premium Leather Shoes",
-    category:"Shoes",
-    price:2800,
-    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:3,
-    name:"Luxury Wrist Watch",
-    category:"Watches",
-    price:4500,
-    image:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:4,
-    name:"Elegant Sunglasses",
-    category:"Accessories",
-    price:1500,
-    image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:5,
-    name:"Modern Casual Shirt",
-    category:"Fashion",
-    price:1250,
-    image:"https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:6,
-    name:"Urban Sneakers",
-    category:"Shoes",
-    price:2400,
-    image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:7,
-    name:"Classic Gold Watch",
-    category:"Watches",
-    price:5200,
-    image:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:8,
-    name:"Premium Leather Bag",
-    category:"Accessories",
-    price:3600,
-    image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:9,
-    name:"Luxury Winter Coat",
-    category:"Fashion",
-    price:5800,
-    image:"https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:10,
-    name:"White Premium Sneakers",
-    category:"Shoes",
-    price:3100,
-    image:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:11,
-    name:"Minimalist Silver Watch",
-    category:"Watches",
-    price:4200,
-    image:"https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:12,
-    name:"Designer Handbag",
-    category:"Accessories",
-    price:3900,
-    image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:13,
-    name:"Premium Denim Jacket",
-    category:"Fashion",
-    price:2900,
-    image:"https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:14,
-    name:"Classic Formal Shoes",
-    category:"Shoes",
-    price:3500,
-    image:"https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:15,
-    name:"Luxury Leather Wallet",
-    category:"Accessories",
-    price:1800,
-    image:"https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=700&q=85"
-  },
-
-  {
-    id:16,
-    name:"Premium Black Hoodie",
-    category:"Fashion",
-    price:2200,
-    image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=85"
-  }
-
-];
-
-// ===================================
-// GLOBAL DATA
-// ===================================
-
-let selectedCategory = "All";
-let cart = [];
-let wishlist = [];
-
-// ===================================
-// PRICE FORMAT
-// ===================================
-
-function money(value) {
-  return "৳" + value.toLocaleString("en-IN");
+function openWishlist(){
+  const panel = document.getElementById("wishlistPanel");
+  if(panel) panel.classList.add("active");
+  renderWishlist();
 }
 
-// ===================================
-// DISPLAY PRODUCTS
-// ===================================
+function closeWishlist(){
+  const panel = document.getElementById("wishlistPanel");
+  if(panel) panel.classList.remove("active");
+}
 
-function renderProducts() {
+function renderWishlist(){
+  const box = document.getElementById("wishlistItems");
+  if(!box) return;
 
-  const search = document
-    .getElementById("search")
-    .value.toLowerCase();
+  const list = window.wishlist || [];
 
-  const filtered = products.filter(p =>
-
-    (selectedCategory === "All" ||
-      p.category === selectedCategory) &&
-
-    p.name.toLowerCase().includes(search)
-
-  );
-
-  const list = document.getElementById("product-list");
-
-  if (!filtered.length) {
-    list.innerHTML =
-      '<div class="empty">No products found.</div>';
+  if(!list.length){
+    box.innerHTML="<p>Your wishlist is empty.</p>";
     return;
   }
 
-  list.innerHTML = filtered.map(p => `
-
-    <article class="product">
-
-      <img
-        src="${p.image}"
-        alt="${p.name}"
-        loading="lazy"
-      >
-
-      <div class="product-info">
-
-        <div class="category-label">
-          ${p.category}
-        </div>
-
-        <h3>${p.name}</h3>
-
-        <div class="price">
-          ${money(p.price)}
-        </div>
-
-        <div class="product-actions">
-
-          <button
-            class="add-btn"
-            onclick="addToCart(${p.id})"
-          >
-            ADD TO CART
-          </button>
-
-          <button
-            class="wish-btn ${wishlist.includes(p.id) ? "liked" : ""}"
-            onclick="toggleWish(${p.id})"
-            aria-label="Add to wishlist"
-          >
-            ♥
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
+  box.innerHTML=list.map(item=>`
+    <div class="wishlist-item">
+      <strong>${escapeStoreText(item.name)}</strong>
+      <p>৳${Number(item.price).toLocaleString("en-BD")}</p>
+      <button onclick="addToCart(${Number(item.id)})">ADD TO CART</button>
+    </div>
   `).join("");
-
 }
 
-// ===================================
-// CATEGORY FILTER
-// ===================================
-
-function filterProducts(category, button) {
-
-  selectedCategory = category;
-
-  document.querySelectorAll(".filter")
-    .forEach(b => b.classList.remove("active"));
-
-  button.classList.add("active");
-
-  renderProducts();
-
+function escapeStoreText(value){
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
 
-// ===================================
-// ADD TO CART
-// ===================================
+function subscribeNewsletter(event){
+  event.preventDefault();
+  const email=document.getElementById("newsletterEmail").value;
+  alert("Thank you for your interest! Newsletter service is in demo mode.");
+  event.target.reset();
+}
 
-function addToCart(id) {
+function sortProducts(){
+  const select=document.getElementById("sortProducts");
+  if(!select || !window.products) return;
 
-  const existing = cart.find(item => item.id === id);
+  let list=[...window.products];
+  const value=select.value;
 
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({
-      id:id,
-      qty:1
-    });
+  if(value==="low") list.sort((a,b)=>Number(a.price)-Number(b.price));
+  if(value==="high") list.sort((a,b)=>Number(b.price)-Number(a.price));
+  if(value==="name") list.sort((a,b)=>a.name.localeCompare(b.name));
+
+  if(typeof renderProducts==="function"){
+    renderProducts(list);
   }
-
-  updateCart();
-
 }
-
-// ===================================
-// WISHLIST
-// ===================================
-
-function toggleWish(id) {
-
-  if (wishlist.includes(id)) {
-
-    wishlist = wishlist.filter(x => x !== id);
-
-  } else {
-
-    wishlist.push(id);
-
-  }
-
-  renderProducts();
-
-}
-
-// ===================================
-// UPDATE CART
-// ===================================
-
-function updateCart() {
-
-  const count = cart.reduce(
-    (sum, item) => sum + item.qty, 0
-  );
-
-  document.getElementById("cart-count").textContent = count;
-
-  const container = document.getElementById("cart-items");
-
-  if (cart.length === 0) {
-
-    container.innerHTML =
-      '<p style="color:#aaa">Your cart is empty.</p>';
-
-  } else {
-
-    container.innerHTML = cart.map(item => {
-
-      const p = products.find(x => x.id === item.id);
-
-      return `
-
-        <div class="cart-item">
-
-          <img src="${p.image}" alt="${p.name}">
-
-          <div class="cart-item-info">
-
-            <strong>${p.name}</strong>
-
-            <p>${money(p.price)}</p>
-
-            <div class="qty-row">
-
-              <button onclick="changeQty(${p.id},-1)">−</button>
-
-              <span>${item.qty}</span>
-
-              <button onclick="changeQty(${p.id},1)">+</button>
-
-              <button
-                class="remove"
-                onclick="removeItem(${p.id})"
-              >
-                Remove
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-  }
-
-  const total = cart.reduce((sum, item) => {
-
-    const p = products.find(x => x.id === item.id);
-
-    return sum + p.price * item.qty;
-
-  }, 0);
-
-  document.getElementById("cart-total").textContent =
-    money(total);
-
-  document.getElementById("checkout-message").textContent = "";
-
-}
-
-// ===================================
-// QUANTITY CONTROL
-// ===================================
-
-function changeQty(id, change) {
-
-  const item = cart.find(x => x.id === id);
-
-  if (!item) return;
-
-  item.qty += change;
-
-  if (item.qty <= 0) {
-
-    removeItem(id);
-
-  } else {
-
-    updateCart();
-
-  }
-
-}
-
-// ===================================
-// REMOVE PRODUCT
-// ===================================
-
-function removeItem(id) {
-
-  cart = cart.filter(x => x.id !== id);
-
-  updateCart();
-
-}
-
-// ===================================
-// OPEN CART
-// ===================================
-
-function openCart() {
-
-  document.getElementById("cart-panel")
-    .classList.add("open");
-
-  document.getElementById("overlay")
-    .classList.add("show");
-
-}
-
-// ===================================
-// CLOSE CART
-// ===================================
-
-function closeCart() {
-
-  document.getElementById("cart-panel")
-    .classList.remove("open");
-
-  document.getElementById("overlay")
-    .classList.remove("show");
-
-}
-
-// ===================================
-// CHECKOUT
-// ===================================
-
-function checkout() {
-
-  const message =
-    document.getElementById("checkout-message");
-
-  if (!cart.length) {
-
-    message.textContent =
-      "Your cart is empty. Add a product first.";
-
-    return;
-
-  }
-
-  message.textContent =
-    "Demo checkout only. Real payment and order processing will be connected in a later version.";
-
-}
-
-// ===================================
-// INITIALIZE WEBSITE
-// ===================================
-
-renderProducts();
-updateCart();
-
 </script>
 
 </body>
