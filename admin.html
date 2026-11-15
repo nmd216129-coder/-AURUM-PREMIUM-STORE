@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM | Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+<style>
+:root {
+  --bg:#080808;
+  --panel:#141414;
+  --gold:#D7B56D;
+  --text:#fff;
+  --muted:#999;
+  --border:#292929;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+header{
+  height:70px;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:#101010;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.logo{
+  color:var(--gold);
+  font-size:25px;
+  font-weight:bold;
+  letter-spacing:4px;
+}
+.admin-label{color:var(--muted);font-size:12px}
+.layout{display:flex;min-height:calc(100vh - 70px)}
+.sidebar{
+  width:220px;
+  padding:22px 12px;
+  border-right:1px solid var(--border);
+  background:#101010;
+  flex-shrink:0;
+}
+.nav-btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:#bbb;
+  text-align:left;
+  margin-bottom:7px;
+  cursor:pointer;
+  font-size:14px;
+}
+.nav-btn.active,.nav-btn:hover{
+  background:#282116;
+  color:var(--gold);
+}
+main{padding:25px;width:100%;min-width:0}
+h1{font-size:25px;margin:0 0 8px}
+.subtitle{color:var(--muted);font-size:13px;margin-bottom:25px}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:25px;
+}
+.stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:19px;
+}
+.stat small{color:var(--muted)}
+.stat h2{color:var(--gold);margin:12px 0 0;font-size:25px}
+.section{
+  display:none;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:20px;
+}
+.section.active{display:block}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.section h2{font-size:19px;margin:0}
+button{
+  cursor:pointer;
+  border:0;
+  border-radius:7px;
+  padding:11px 15px;
+  font-weight:bold;
+}
+.primary{background:var(--gold);color:#111}
+.secondary{background:#292929;color:white}
+.danger{background:#542323;color:#fff}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #333;
+  border-radius:7px;
+  background:#0b0b0b;
+  color:white;
+  outline:none;
+  margin-top:7px;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+label{display:block;color:#bbb;font-size:13px;margin-bottom:13px}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{
+  text-align:left;
+  padding:13px 10px;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+th{color:var(--gold)}
+.table-wrap{overflow-x:auto}
+.product-img{
+  width:42px;height:42px;object-fit:cover;border-radius:6px;
+  background:#222;
+}
+.status{color:var(--gold)}
+.actions{display:flex;gap:6px}
+.actions button{padding:8px;font-size:12px}
+.empty{color:var(--muted);padding:25px;text-align:center}
+#productForm{display:none;margin-top:18px;padding:18px;background:#0b0b0b;border-radius:10px}
+#productForm.show{display:block}
+.notice{
+  color:#aaa;
+  font-size:12px;
+  line-height:1.7;
+  margin-top:15px;
+}
+@media(max-width:850px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sidebar{width:65px;padding:15px 5px}
+  .nav-btn{font-size:0;text-align:center;padding:14px 4px}
+  .nav-btn::first-letter{font-size:16px}
+  main{padding:15px}
+}
+@media(max-width:480px){
+  .stats{gap:8px}
+  .stat{padding:13px}
+  .stat h2{font-size:20px}
+  .form-grid{grid-template-columns:1fr}
+  .admin-label{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AURUM</div>
+  <div class="admin-label">PREMIUM STORE · ADMIN PANEL</div>
+</header>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <button class="nav-btn active" onclick="showSection('dashboard',this)">▣ Dashboard</button>
+  <button class="nav-btn" onclick="showSection('products',this)">◇ Products</button>
+  <button class="nav-btn" onclick="showSection('orders',this)">▤ Orders</button>
+  <button class="nav-btn" onclick="showSection('settings',this)">⚙ Settings</button>
+  <a href="index.html" style="display:block;padding:14px;color:#aaa;text-decoration:none;font-size:13px">↗ View Store</a>
+</aside>
+
+<main>
+
+<div id="dashboard" class="section active">
+  <h1>Dashboard</h1>
+  <p class="subtitle">Welcome to your AURUM store management panel.</p>
+
+  <div class="stats">
+    <div class="stat"><small>Total Products</small><h2 id="totalProducts">0</h2></div>
+    <div class="stat"><small>Total Orders</small><h2>0</h2></div>
+    <div class="stat"><small>Demo Revenue</small><h2>৳0</h2></div>
+    <div class="stat"><small>Low Stock</small><h2 id="lowStock">0</h2></div>
+  </div>
+
+  <div class="section-head">
+    <h2>Store Overview</h2>
+  </div>
+  <p class="notice">
+    Your AURUM dashboard is ready. Add products, manage your product list,
+    and review your demo store settings from the menu.
+  </p>
+</div>
+
+<div id="products" class="section">
+  <div class="section-head">
+    <h2>Product Management</h2>
+    <button class="primary" onclick="openForm()">+ Add Product</button>
+  </div>
+
+  <div id="productForm">
+    <h3 id="formTitle">Add New Product</h3>
+    <form onsubmit="saveProduct(event)">
+      <div class="form-grid">
+        <label>Product Name
+          <input id="pName" required placeholder="Premium Black Jacket">
+        </label>
+        <label>Category
+          <select id="pCategory">
+            <option>Men</option>
+            <option>Women</option>
+            <option>Watches</option>
+            <option>Shoes</option>
+            <option>Accessories</option>
+          </select>
+        </label>
+        <label>Price (BDT)
+          <input id="pPrice" type="number" min="0" required placeholder="2500">
+        </label>
+        <label>Stock
+          <input id="pStock" type="number" min="0" required placeholder="10">
+        </label>
+        <label>Rating
+          <input id="pRating" type="number" min="0" max="5" step="0.1" value="5">
+        </label>
+        <label>Image URL
+          <input id="pImage" type="url" placeholder="https://example.com/image.jpg">
+        </label>
+      </div>
+      <label>Description
+        <textarea id="pDescription" rows="3" placeholder="Product details..."></textarea>
+      </label>
+      <button class="primary" type="submit">Save Product</button>
+      <button class="secondary" type="button" onclick="closeForm()">Cancel</button>
+    </form>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+  </div>
+  <p class="notice">
+    Demo note: Product changes are saved in this browser's local storage.
+    They are not yet synchronized with the public storefront or other devices.
+  </p>
+</div>
+
+<div id="orders" class="section">
+  <h1>Orders</h1>
+  <p class="subtitle">Customer order management</p>
+  <div class="empty">
+    No real orders yet.<br>
+    Order management will be connected after backend setup.
+  </div>
+</div>
+
+<div id="settings" class="section">
+  <h1>Store Settings</h1>
+  <p class="subtitle">AURUM store configuration</p>
+  <p>Store Name: <strong style="color:var(--gold)">AURUM</strong></p>
+  <p>Currency: BDT (৳)</p>
+  <p>Theme: Black & Gold</p>
+  <p>Mode: Demo</p>
+  <p class="notice">
+    This page is a front-end demo. It does not have secure admin login,
+    real order processing, or payment integration.
+  </p>
+</div>
+
+</main>
+</div>
+
+<script src="config.js"></script>
+<script src="products.js"></script>
+
+<script>
+let editingId = null;
+
+function loadAdminProducts(){
+  let saved = localStorage.getItem("aurum_products");
+  if(saved){
+    try{return JSON.parse(saved)}catch(e){}
+  }
+  let initial = Array.isArray(window.products) ? window.products : [];
+  localStorage.setItem("aurum_products",JSON.stringify(initial));
+  return initial;
+}
+
+let adminProducts = loadAdminProducts();
+
+function saveToStorage(){
+  localStorage.setItem("aurum_products",JSON.stringify(adminProducts));
+  renderAdminProducts();
+}
+
+function showSection(id,btn){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function renderAdminProducts(){
+  const table = document.getElementById("productTable");
+  document.getElementById("totalProducts").textContent=adminProducts.length;
+  document.getElementById("lowStock").textContent=
+    adminProducts.filter(p=>Number(p.stock||0)<5).length;
+
+  if(!adminProducts.length){
+    table.innerHTML='<tr><td colspan="6" class="empty">No products found.</td></tr>';
+    return;
+  }
+
+  table.innerHTML=adminProducts.map((p,i)=>`
+    <tr>
+      <td><img class="product-img" src="${escapeHTML(p.image||"")}" onerror="this.style.visibility='hidden'"></td>
+      <td>${escapeHTML(p.name)}</td>
+      <td>${escapeHTML(p.category)}</td>
+      <td>৳${Number(p.price||0).toLocaleString("en-BD")}</td>
+      <td>${Number(p.stock||0)}</td>
+      <td>
+        <div class="actions">
+          <button class="secondary" onclick="editProduct(${i})">Edit</button>
+          <button class="danger" onclick="deleteProduct(${i})">Delete</button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function openForm(){
+  editingId=null;
+  document.getElementById("formTitle").textContent="Add New Product";
+  document.querySelector("#productForm form").reset();
+  document.getElementById("productForm").classList.add("show");
+}
+
+function closeForm(){
+  document.getElementById("productForm").classList.remove("show");
+}
+
+function editProduct(i){
+  const p=adminProducts[i];
+  editingId=i;
+  document.getElementById("formTitle").textContent="Edit Product";
+  document.getElementById("pName").value=p.name||"";
+  document.getElementById("pCategory").value=p.category||"Men";
+  document.getElementById("pPrice").value=p.price||0;
+  document.getElementById("pStock").value=p.stock||0;
+  document.getElementById("pRating").value=p.rating||5;
+  document.getElementById("pImage").value=p.image||"";
+  document.getElementById("pDescription").value=p.description||"";
+  document.getElementById("productForm").classList.add("show");
+  document.getElementById("productForm").scrollIntoView({behavior:"smooth"});
+}
+
+function saveProduct(e){
+  e.preventDefault();
+
+  const product={
+    id:editingId!==null ? adminProducts[editingId].id : Date.now(),
+    name:document.getElementById("pName").value.trim(),
+    category:document.getElementById("pCategory").value,
+    price:Number(document.getElementById("pPrice").value),
+    stock:Number(document.getElementById("pStock").value),
+    rating:Number(document.getElementById("pRating").value),
+    image:document.getElementById("pImage").value.trim(),
+    description:document.getElementById("pDescription").value.trim()
+  };
+
+  if(editingId!==null){
+    adminProducts[editingId]=product;
+  }else{
+    adminProducts.unshift(product);
+  }
+
+  saveToStorage();
+  closeForm();
+  alert("Product saved in this browser!");
+}
+
+function deleteProduct(i){
+  if(!confirm("Are you sure you want to delete this product?"))return;
+  adminProducts.splice(i,1);
+  saveToStorage();
+}
+
+renderAdminProducts();
+</script>
+
+</body>
+</html>
